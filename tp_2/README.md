@@ -457,3 +457,98 @@ jjk@super-vm:~$
 ````
 le port écoute toujours sur le 22
 
+
+
+
+
+## ajout du domaine
+
+````
+resource "azurerm_public_ip" "main" {
+  name                = "vm-ip"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  domain_name_label = "super-vm-efrei"  # ajout du domaine
+}
+
+````
+   ## Resultat du terraform apply
+
+````
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> terraform apply
+azurerm_resource_group.main: Refreshing state... [id=/subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2]
+azurerm_public_ip.main: Refreshing state... [id=/subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Network/publicIPAddresses/vm-ip]
+azurerm_network_security_group.vm_nsg: Refreshing state... [id=/subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Network/networkSecurityGroups/nsg-vm-ssh]
+azurerm_virtual_network.main: Refreshing state... [id=/subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Network/virtualNetworks/vm-vnet]
+azurerm_subnet.main: Refreshing state... [id=/subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Network/virtualNetworks/vm-vnet/subnets/vm-subnet]
+azurerm_network_interface.main: Refreshing state... [id=/subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Network/networkInterfaces/vm-nic]
+azurerm_network_interface_security_group_association.nsg_nic_assoc: Refreshing state... [id=/subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Network/networkInterfaces/vm-nic|/subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Network/networkSecurityGroups/nsg-vm-ssh]
+azurerm_linux_virtual_machine.main: Refreshing state... [id=/subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Compute/virtualMachines/super-vm]
+
+Changes to Outputs:
+  + fqdn              = "super-vm-efrei.francecentral.cloudapp.azure.com"
+
+You can apply this plan to save these new output values to the Terraform state, without changing any real infrastructure.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+fqdn = "super-vm-efrei.francecentral.cloudapp.azure.com"
+public_ip_address = "4.212.91.140"
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform>
+````
+
+
+ ## CONNECTION VIA LE DNS
+
+
+
+````
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> ssh jjk@super-vm-efrei.francecentral.cloudapp.azure.com
+The authenticity of host 'super-vm-efrei.francecentral.cloudapp.azure.com (4.212.91.140)' can't be established.
+ED25519 key fingerprint is SHA256:1JE2Tjuk8RWzFVikGxCqpKqaXlBZxAQIyzSOXMZ14aE.
+This host key is known by the following other names/addresses:
+    C:\Users\stephane/.ssh/known_hosts:7: 4.212.91.140
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'super-vm-efrei.francecentral.cloudapp.azure.com' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-1089-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Sat Dec 13 19:47:30 UTC 2025
+
+  System load:  0.0               Processes:             114
+  Usage of /:   5.5% of 28.89GB   Users logged in:       1
+  Memory usage: 31%               IPv4 address for eth0: 10.0.1.4
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '22.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Sat Dec 13 19:45:34 2025 from 46.193.69.134
+jjk@super-vm:~$
+````

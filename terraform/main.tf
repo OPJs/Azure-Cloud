@@ -54,11 +54,7 @@ resource "azurerm_public_ip" "main" {
   resource_group_name = azurerm_resource_group.main.name
   allocation_method   = "Static"
   sku                 = "Standard"
-}
-
-output "public_ip_address" {
-  value = azurerm_public_ip.main.ip_address
-  description = "Adresse IP publique de la VM"
+  domain_name_label = "super-vm-efrei"  # ajout du domaine
 }
 
 resource "azurerm_linux_virtual_machine" "main" {
@@ -67,6 +63,8 @@ resource "azurerm_linux_virtual_machine" "main" {
   location            = azurerm_resource_group.main.location
   size                = "Standard_B1s"
   admin_username      = var.admin_username
+  admin_password      = var.admin_password
+  disable_password_authentication = false
   network_interface_ids = [
     azurerm_network_interface.main.id,
   ]
@@ -89,3 +87,5 @@ resource "azurerm_linux_virtual_machine" "main" {
     version   = "latest"
   }
 }
+
+

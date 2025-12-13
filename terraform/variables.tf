@@ -25,3 +25,7 @@ variable "subscription_id" {
   type        = string
   description = "Azure subscription ID"
 }
+variable "admin_password" {
+  type        = string
+  description = "vm password"
+}
