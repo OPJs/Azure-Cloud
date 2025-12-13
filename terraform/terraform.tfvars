@@ -4,3 +4,5 @@ public_key_path = "C:/Users/stephane/Desktop/Efrei/M1/cloud/Tp_cloudAzure/tp_1/c
 location = "francecentral"
 subscription_id = "a3bd582e-88e4-4000-970e-b3e76914e628"
 admin_password = "1998Steph"
+storage_account_name = "supervmstorage"
+storage_container_name = "mycontainer"

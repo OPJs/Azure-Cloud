@@ -552,3 +552,186 @@ Run 'do-release-upgrade' to upgrade to it.
 Last login: Sat Dec 13 19:45:34 2025 from 46.193.69.134
 jjk@super-vm:~$
 ````
+
+
+
+ ## BLOB STORAGE INSTALLATION DE AZCOPY
+
+
+````
+ jjk@super-vm:~$ wget https://aka.ms/downloadazcopy-v10-linux -O azcopy.tar.gz
+inux_amd64_*/install.sh--2025-12-13 22:48:38--  https://aka.ms/downloadazcopy-v10-linux
+Resolving aka.ms (aka.ms)... 23.220.113.159
+Connecting to aka.ms (aka.ms)|23.220.113.159|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://github.com/Azure/azure-storage-azcopy/releases/download/v10.31.0/azcopy_linux_amd64_10.31.0.tar.gz [following]
+--2025-12-13 22:48:39--  https://github.com/Azure/azure-storage-azcopy/releases/download/v10.31.0/azcopy_linux_amd64_10.31.0.tar.gz
+Resolving github.com (github.com)... 140.82.121.4
+Connecting to github.com (github.com)|140.82.121.4|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://release-assets.githubusercontent.com/github-production-release-asset/114798676/a7fab890-fa0b-4545-b72d-cdcc482f55ec?sp=r&sv=2018-11-09&sr=b&spr=https&se=2025-12-13T23%3A46%3A48Z&rscd=attachment%3B+filename%3Dazcopy_linux_amd64_10.31.0.tar.gz&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2025-12-13T22%3A46%3A47Z&ske=2025-12-13T23%3A46%3A48Z&sks=b&skv=2018-11-09&sig=RBWyiBSeJxisZegjvaSJkO5kDrSLBozHL2FdRKUTWbw%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc2NTY2Nzg4OSwibmJmIjoxNzY1NjY2MDg5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Xn42DjbAK435Gq-wJPD5hmMs98Bpe6DnTIf5xV3VK4A&response-content-disposition=attachment%3B%20filename%3Dazcopy_linux_amd64_10.31.0.tar.gz&response-content-type=application%2Foctet-stream [following]
+--2025-12-13 22:48:39--  https://release-assets.githubusercontent.com/github-production-release-asset/114798676/a7fab890-fa0b-4545-b72d-cdcc482f55ec?sp=r&sv=2018-11-09&sr=b&spr=https&se=2025-12-13T23%3A46%3A48Z&rscd=attachment%3B+filename%3Dazcopy_linux_amd64_10.31.0.tar.gz&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2025-12-13T22%3A46%3A47Z&ske=2025-12-13T23%3A46%3A48Z&sks=b&skv=2018-11-09&sig=RBWyiBSeJxisZegjvaSJkO5kDrSLBozHL2FdRKUTWbw%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc2NTY2Nzg4OSwibmJmIjoxNzY1NjY2MDg5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Xn42DjbAK435Gq-wJPD5hmMs98Bpe6DnTIf5xV3VK4A&response-content-disposition=attachment%3B%20filename%3Dazcopy_linux_amd64_10.31.0.tar.gz&response-content-type=application%2Foctet-stream
+Resolving release-assets.githubusercontent.com (release-assets.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.111.133, ...
+Connecting to release-assets.githubusercontent.com (release-assets.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 23130293 (22M) [application/octet-stream]
+Saving to: ‘azcopy.tar.gz’
+
+azcopy.tar.gz                                            100%[================================================================================================================================>]  22.06M   125MB/s    in 0.2s     
+
+2025-12-13 22:48:39 (125 MB/s) - ‘azcopy.tar.gz’ saved [23130293/23130293]
+
+jjk@super-vm:~$ tar -xvf azcopy.tar.gz
+azcopy_linux_amd64_10.31.0/
+azcopy_linux_amd64_10.31.0/azcopy
+azcopy_linux_amd64_10.31.0/NOTICE.txt
+jjk@super-vm:~$ sudo ./azcopy_linux_amd64_*/install.sh
+sudo: ./azcopy_linux_amd64_*/install.sh: command not found
+jjk@super-vm:~$ sudo ./azcopy_linux_amd64_*/install.sh
+sudo: ./azcopy_linux_amd64_*/install.sh: command not found
+jjk@super-vm:~$ cd azcopy_linux_amd64_*
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ ls -l azcopy
+-rwxrwxr-x 1 jjk jjk 56021152 Oct 28 18:29 azcopy
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ sudo cp azcopy /usr/local/bin/
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ azcopy --version
+azcopy version 10.31.0
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$
+````
+
+
+## BLOB STORAGE AUTHENTIFICATION AUTOMATIQUE
+
+
+````
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ azcopy login --identity
+INFO: Login with identity succeeded.
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ 
+````
+
+
+## BLOB STORAGE ECRITURE D'UN FICHIER
+
+
+
+````
+echo "Hello from AzCopy!" > testfile.txt
+````
+
+````
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ azcopy copy ./testfile.txt "https://supervmstorage.blob.core.windows.net/mycontainer/testfile.txt"
+INFO: Scanning...
+INFO: Autologin not specified.
+INFO: Authenticating to destination using Azure AD
+INFO: Any empty folders will not be processed, because source and/or destination doesn't have full folder support
+
+Job f8eb5be6-8944-d846-5e76-7cfe31a1a4fc has started
+Log file is located at: /home/jjk/.azcopy/f8eb5be6-8944-d846-5e76-7cfe31a1a4fc.log
+
+100.0 %, 1 Done, 0 Failed, 0 Pending, 0 Skipped, 1 Total, 
+
+
+Job f8eb5be6-8944-d846-5e76-7cfe31a1a4fc summary
+Elapsed Time (Minutes): 0.0335
+Number of File Transfers: 1
+Number of Folder Property Transfers: 0
+Number of Symlink Transfers: 0
+Total Number of Transfers: 1
+Number of File Transfers Completed: 1
+Number of Folder Transfers Completed: 0
+Number of File Transfers Failed: 0
+Number of Folder Transfers Failed: 0
+Number of File Transfers Skipped: 0
+Number of Folder Transfers Skipped: 0
+Number of Symbolic Links Skipped: 0
+Number of Hardlinks Converted: 0
+Number of Hardlinks Skipped: 0
+Number of Special Files Skipped: 0
+Total Number of Bytes Transferred: 19
+Final Job Status: Completed
+
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ 
+````
+
+
+## BLOB STORAGE LECTURE D'UN FICHIER
+
+````
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ azcopy copy "https://supervmstorage.blob.core.windows.net/mycontainer/testfile.txt" ./downloaded_testfile.txt
+INFO: Scanning...
+INFO: Autologin not specified.
+INFO: Authenticating to source using Azure AD
+INFO: Any empty folders will not be processed, because source and/or destination doesn't have full folder support
+
+Job 3d818419-ee18-ec43-6567-aa320fbf19bb has started
+Log file is located at: /home/jjk/.azcopy/3d818419-ee18-ec43-6567-aa320fbf19bb.log
+
+100.0 %, 1 Done, 0 Failed, 0 Pending, 0 Skipped, 1 Total, 
+
+
+Job 3d818419-ee18-ec43-6567-aa320fbf19bb summary
+Elapsed Time (Minutes): 0.0335
+Number of File Transfers: 1
+Number of Folder Property Transfers: 0
+Number of Symlink Transfers: 0
+Total Number of Transfers: 1
+Number of File Transfers Completed: 1
+Number of Folder Transfers Completed: 0
+Number of File Transfers Failed: 0
+Number of Folder Transfers Failed: 0
+Number of File Transfers Skipped: 0
+Number of Folder Transfers Skipped: 0
+Number of Symbolic Links Skipped: 0
+Number of Hardlinks Converted: 0
+Number of Hardlinks Skipped: 0
+Number of Special Files Skipped: 0
+Total Number of Bytes Transferred: 19
+Final Job Status: Completed
+
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ cat downloaded_testfile.txt
+Hello from AzCopy!
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$
+````
+
+
+## BLOB STORAGE EXPLICATION
+
+Comment fonctionne azcopy login --identity
+
+La commande azcopy login --identity utilise l’Managed Identity de la VM Azure pour s’authentifier sans mot de passe ni clé.
+
+Concrètement :
+
+La VM possède une Managed Identity (System Assigned ou User Assigned).
+
+Azure expose un endpoint d’identité local accessible uniquement depuis la VM
+(IMDS – Instance Metadata Service).
+
+AzCopy appelle cet endpoint pour demander un token d’accès Azure AD.
+
+Azure AD émet un JWT (JSON Web Token) signé, contenant :
+
+l’identité de la VM (principal_id),
+
+les rôles RBAC associés (ex : Storage Blob Data Contributor),
+
+une durée de validité limitée.
+
+AzCopy utilise ce JWT comme Bearer Token dans les requêtes HTTPS vers Azure Blob Storage.
+
+
+
+
+
+## BLOB STORAGE REQUETER JWT
+
+````
+jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ curl -s -H "Metadata:true" \
+> "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://storage.azure.com/"
+{"access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6InJ0c0ZULWItN0x1WTdEVlllU05LY0lKN1ZuYyIsImtpZCI6InJ0c0ZULWItN0x1WTdEVlllU05LY0lKN1ZuYyJ9.eyJhdWQiOiJodHRwczovL3N0b3JhZ2UuYXp1cmUuY29tLyIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzQxMzYwMGNmLWJkNGUtNGM3Yy04YTYxLTY5ZTczY2RkZjczMS8iLCJpYXQiOjE3NjU2NjgwMTQsIm5iZiI6MTc2NTY2ODAxNCwiZXhwIjoxNzY1NzU0NzE0LCJhaW8iOiJrMkpnWU5oODQvakZucXhIa1h5bE12NC9sS3JEQUE9PSIsImFwcGlkIjoiYjFmNDk1MmYtNTY3ZS00ZDA2LWI5MzAtNDU1YjM0OGYzYWE0IiwiYXBwaWRhY3IiOiIyIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNDEzNjAwY2YtYmQ0ZS00YzdjLThhNjEtNjllNzNjZGRmNzMxLyIsImlkdHlwIjoiYXBwIiwib2lkIjoiMDAyYjI1NGQtN2NjOS00ZDdhLWFiYjQtMmZlYTZiZDEwYmFhIiwicmgiOiIxLkFUc0F6d0EyUVU2OWZFeUtZV25uUE4zM01ZR21CdVRVODZoQ2tMYkNzQ2xKZXZFVkFRQTdBQS4iLCJzdWIiOiIwMDJiMjU0ZC03Y2M5LTRkN2EtYWJiNC0yZmVhNmJkMTBiYWEiLCJ0aWQiOiI0MTM2MDBjZi1iZDRlLTRjN2MtOGE2MS02OWU3M2NkZGY3MzEiLCJ1dGkiOiJTemF6czVFTV9VMmowRDhpNFZqOEFBIiwidmVyIjoiMS4wIiwieG1zX2FjdF9mY3QiOiIzIDkiLCJ4bXNfZnRkIjoiQ3JrLWthdWIwZ3lvd0NYSTVHZVJQYURyc09obGt6TUFhaW83NC1KYnNQc0JabkpoYm1ObFl5MWtjMjF6IiwieG1zX2lkcmVsIjoiNCA3IiwieG1zX21pcmlkIjoiL3N1YnNjcmlwdGlvbnMvYTNiZDU4MmUtODhlNC00MDAwLTk3MGUtYjNlNzY5MTRlNjI4L3Jlc291cmNlZ3JvdXBzL3Rlc3QyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvc3VwZXItdm0iLCJ4bXNfcmQiOiIwLjQyTGxZQkppdEJZUzRlQVVFbERwOWJWYnVlMjI3NlF2NmJveW1rMTZRRkVPSVlIR1pXeFBybnhlNFRSaDI2RU5tcDVWSHdFIiwieG1zX3N1Yl9mY3QiOiIzIDkiLCJ4bXNfdGRiciI6IkVVIn0.aUEO0eNy0qXHxTbk1fGn6OealCdBi78VsQEOUrm7lHg_pFsb_3iOljQy6kuDxZM1DX6LXPVy7sh4p9mGlRQNdkYelDucj-clRXgo2hU5oDFoG1oiBkda8eMZeMUuJ-sTjMVPjRGpfCkRknlbdMCairssMHDI25mAVJ1pp3X_PQp42UTnX6e1OniOYeawYV5Hrz0dzJX_cEDwYqofB2dHIi9xofr5UGv1xMpYeVr_I9evHJV5_bBlLGVpi0gCQU56JksGcotdXmzaSe1cd52WWfqwgWK1HtUt2oILqNpmYleyTs9iAZIAwsHGMEqYOs2uuTT8RoGC3gQZ-RQOcsPHgQ","client_id":"b1f4952f-567e-4d06-b930-455b348f3aa4","expires_in":"86400","expires_on":"1765754714","ext_expires_in":"86399","not_before":"1765668014","resource":"https://storage.azure.com/","token_type":"Bearer"}jjk@super-vm:~/azcopy_linux_amd64_10.31.0$  
+````  
+
+
+
+
+L’adresse 169.254.169.254 est joignable car la table de routage de la VM contient une route link-local qui envoie ce trafic directement vers l’interface réseau, où il est intercepté par l’hyperviseur Azure pour fournir le service IMDS.
+

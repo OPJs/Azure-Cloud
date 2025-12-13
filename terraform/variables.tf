@@ -29,3 +29,11 @@ variable "admin_password" {
   type        = string
   description = "vm password"
 }
+variable "storage_account_name" {
+  type        = string
+  description = "vm password"
+}
+variable "storage_container_name" {
+  type        = string
+  description = "vm password"
+}
