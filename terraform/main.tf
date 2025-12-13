@@ -56,6 +56,11 @@ resource "azurerm_public_ip" "main" {
   sku                 = "Standard"
 }
 
+output "public_ip_address" {
+  value = azurerm_public_ip.main.ip_address
+  description = "Adresse IP publique de la VM"
+}
+
 resource "azurerm_linux_virtual_machine" "main" {
   name                = "super-vm"
   resource_group_name = azurerm_resource_group.main.name
