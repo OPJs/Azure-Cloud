@@ -880,3 +880,147 @@ pierre.oloa@efrei.net  bd40b52b-18c6-3456-f050-1570e39669ce                 e0d0
 pierre.oloa@efrei.net  bd40b52b-18c6-3456-f050-1570e39669ce                 c903bd22-0299-482b-84a7-c11cd85e7ab7  2025-12-14T12:45:59.178087Z   Informational  7fc71b25-a292-473d-88d4-43c3739261f5  test2                /subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Insights/metricAlerts/cpu-alert-super-vm  2025-12-14T12:47:18Z   a3bd582e-88e4-4000-970e-b3e76914e628  413600cf-bd4e-4c7c-8a61-69e73cddf731  test2
 PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> 
 ```` 
+
+
+
+## VAULT AFFICHER LE SECRET DEPUIS LA WEBUI
+
+
+![Texte alternatif](keyvault.png "keyvault.png")
+
+
+![Texte alternatif](keysecret.png "keysecret.png")
+
+
+
+
+## VAULT AFFICHER LE SECRET DEPUIS AZ
+
+
+
+
+````
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> az keyvault secret show --name "jjk-secret" --vault-name "jjk-vault"
+{
+  "attributes": {
+    "created": "2025-12-14T15:44:10+00:00",
+    "enabled": true,
+    "expires": null,
+    "notBefore": null,
+    "recoverableDays": 7,
+    "recoveryLevel": "CustomizedRecoverable+Purgeable",
+    "updated": "2025-12-14T15:44:10+00:00"
+  },
+  "contentType": "",
+  "id": "https://jjk-vault.vault.azure.net/secrets/jjk-secret/b74158ed41754f2993b785a5831611c6",
+  "kid": null,
+  "managed": null,
+  "name": "jjk-secret",
+  "tags": {},
+  "value": "ZcY9vv2M##O32Nc2"
+}
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> 
+````
+
+
+
+
+
+
+
+## VAULT AFFICHER LE SECRET AVEC UN SCRIPT
+
+
+
+
+````
+jjk@super-vm:~$ sudo apt install jq
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libjq1 libonig5
+The following NEW packages will be installed:
+  jq libjq1 libonig5
+0 upgraded, 3 newly installed, 0 to remove and 42 not upgraded.
+Need to get 313 kB of archives.
+After this operation, 1062 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libjq1 libonig5
+The following NEW packages will be installed:
+  jq libjq1 libonig5
+0 upgraded, 3 newly installed, 0 to remove and 42 not upgraded.
+Need to get 313 kB of archives.
+After this operation, 1062 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+The following additional packages will be installed:
+  libjq1 libonig5
+The following NEW packages will be installed:
+  jq libjq1 libonig5
+0 upgraded, 3 newly installed, 0 to remove and 42 not upgraded.
+Need to get 313 kB of archives.
+After this operation, 1062 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+0 upgraded, 3 newly installed, 0 to remove and 42 not upgraded.
+Need to get 313 kB of archives.
+After this operation, 1062 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+After this operation, 1062 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Do you want to continue? [Y/n] y
+Get:1 http://azure.archive.ubuntu.com/ubuntu focal/universe amd64 libonig5 amd64 6.9.4-1 [142 kB]
+Get:2 http://azure.archive.ubuntu.com/ubuntu focal-updates/main amd64 libjq1 amd64 1.6-1ubuntu0.20.04.1 [121 kB]
+Get:3 http://azure.archive.ubuntu.com/ubuntu focal-updates/main amd64 jq amd64 1.6-1ubuntu0.20.04.1 [50.2 kB]
+Fetched 313 kB in 0s (6802 kB/s)
+Get:2 http://azure.archive.ubuntu.com/ubuntu focal-updates/main amd64 libjq1 amd64 1.6-1ubuntu0.20.04.1 [121 kB]
+Get:3 http://azure.archive.ubuntu.com/ubuntu focal-updates/main amd64 jq amd64 1.6-1ubuntu0.20.04.1 [50.2 kB]
+Fetched 313 kB in 0s (6802 kB/s)
+Fetched 313 kB in 0s (6802 kB/s)
+Selecting previously unselected package libonig5:amd64.
+(Reading database ... 59212 files and directories currently installed.)
+Preparing to unpack .../libonig5_6.9.4-1_amd64.deb ...
+Unpacking libonig5:amd64 (6.9.4-1) ...
+Selecting previously unselected package libjq1:amd64.
+Preparing to unpack .../libjq1_1.6-1ubuntu0.20.04.1_amd64.deb ...
+Unpacking libjq1:amd64 (1.6-1ubuntu0.20.04.1) ...
+Selecting previously unselected package jq.
+Preparing to unpack .../jq_1.6-1ubuntu0.20.04.1_amd64.deb ...
+Unpacking jq (1.6-1ubuntu0.20.04.1) ...
+Setting up libonig5:amd64 (6.9.4-1) ...
+Setting up libjq1:amd64 (1.6-1ubuntu0.20.04.1) ...
+Setting up jq (1.6-1ubuntu0.20.04.1) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for libc-bin (2.31-0ubuntu9.17) ...
+jjk@super-vm:~$ # Variables
+jjk@super-vm:~$ VAULT_NAME="jjk-vault"
+jjk@super-vm:~$ SECRET_NAME="jjk-secret"
+jjk@super-vm:~$ 
+jjk@super-vm:~$ # Récupérer un token d'accès avec l'identité managée
+jjk@super-vm:~$ ACCESS_TOKEN=$(curl -H "Metadata:true" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://vault.azure.net" -s | jq -r '.access_token')
+uête pour récupérer le secret
+curl -H "Authorization: Bearer $ACCESS_TOKEN" -H "Content-Type: application/json" \
+  "https://${VAULT_NAME}.vault.azure.net/secrets/${SECRET_NAME}?api-version=7.3" -s | jqjjk@super-vm:~$ 
+jjk@super-vm:~$ # Faire la requête pour récupérer le secret
+jjk@super-vm:~$ curl -H "Authorization: Bearer $ACCESS_TOKEN" -H "Content-Type: application/json" \
+>   "https://${VAULT_NAME}.vault.azure.net/secrets/${SECRET_NAME}?api-version=7.3" -s | jq
+{
+  "value": "ZcY9vv2M##O32Nc2",
+  "contentType": "",
+  "id": "https://jjk-vault.vault.azure.net/secrets/jjk-secret/b74158ed41754f2993b785a5831611c6",
+  "attributes": {
+    "enabled": true,
+    "created": 1765727050,
+    "updated": 1765727050,
+    "recoveryLevel": "CustomizedRecoverable+Purgeable",
+    "recoverableDays": 7
+  },
+  "tags": {}
+}
+jjk@super-vm:~$ 
+````
+
+
