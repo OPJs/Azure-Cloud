@@ -735,3 +735,148 @@ jjk@super-vm:~/azcopy_linux_amd64_10.31.0$ curl -s -H "Metadata:true" \
 
 L’adresse 169.254.169.254 est joignable car la table de routage de la VM contient une route link-local qui envoie ce trafic directement vers l’interface réseau, où il est intercepté par l’hyperviseur Azure pour fournir le service IMDS.
 
+
+
+
+## MONITORING plateform metrics
+
+
+
+
+![Texte alternatif](percentage_cpu.png "percentage_cpu.png")
+
+![Texte alternatif](alertes.png "alertes.png")
+
+
+![Texte alternatif](regles_alertes.png "regles_alertes.png")
+
+
+
+
+## MONITORING ALERTS AVEC AZ
+
+
+
+```` 
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> az monitor metrics alert list `
+>>   --resource-group test2 `
+>>   --output table
+AutoMitigate    Description                       Enabled    EvaluationFrequency    Location    Name                ResourceGroup    Severity    TargetResourceRegion    TargetResourceType    WindowSize
+--------------  --------------------------------  ---------  ---------------------  ----------  ------------------  ---------------  ----------  ----------------------  --------------------  ------------
+True            Alert when CPU usage exceeds 70%  True       PT1M                   global      cpu-alert-super-vm  test2            2                                                         PT5M
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> az monitor scheduled-query list `
+>>   --resource-group test2 `
+>>   --output table
+Preview version of extension is disabled by default for extension installation, enabled for modules without stable versions. 
+Please run 'az config set extension.dynamic_install_allow_preview=true or false' to config it specifically.
+The command requires the extension scheduled-query. Do you want to install it now? The command will continue to run after the extension is installed. (Y/n): Y
+Run 'az config set extension.use_dynamic_install=yes_without_prompt' to allow installing extensions without prompt.
+No stable version of 'scheduled-query' to install. Preview versions allowed.
+The installed extension 'scheduled-query' is in preview.
+C:\Users\stephane\.azure\cliextensions\scheduled-query\azext_scheduled_query\vendored_sdks\__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  __import__('pkg_resources').declare_namespace(__name__)
+AutoMitigate    CreatedWithApiVersion    Description                              Enabled    EvaluationFrequency    Location       Name                   ResourceGroup    Severity    WindowSize
+--------------  -----------------------  ---------------------------------------  ---------  ---------------------  -------------  ---------------------  ---------------  ----------  ------------
+False           2018-04-16               Alert when available RAM is below 512MB  True       0:05:00                francecentral  memory-alert-super-vm  test2            2           0:05:00
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> 
+```` 
+
+
+
+
+
+## MONITORING STRESS DE LA MACHINE-CPU
+
+
+
+
+
+```` 
+jjk@super-vm:~$ sudo apt install -y stress-ng
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libipsec-mb0 libjudydebian1 libsctp1
+Suggested packages:
+  lksctp-tools
+The following NEW packages will be installed:
+  libipsec-mb0 libjudydebian1 libsctp1 stress-ng
+0 upgraded, 4 newly installed, 0 to remove and 42 not upgraded.
+Need to get 2292 kB of archives.
+After this operation, 19.8 MB of additional disk space will be used.
+Get:1 http://azure.archive.ubuntu.com/ubuntu focal/universe amd64 libipsec-mb0 amd64 0.53-1 [491 kB]
+Get:2 http://azure.archive.ubuntu.com/ubuntu focal/universe amd64 libjudydebian1 amd64 1.0.5-5 [94.6 kB]
+Get:3 http://azure.archive.ubuntu.com/ubuntu focal/main amd64 libsctp1 amd64 1.0.18+dfsg-1 [7876 B]
+Get:4 http://azure.archive.ubuntu.com/ubuntu focal-updates/universe amd64 stress-ng amd64 0.11.07-1ubuntu2 [1698 kB]
+Fetched 2292 kB in 0s (20.1 MB/s)
+Selecting previously unselected package libipsec-mb0.
+(Reading database ... 59172 files and directories currently installed.)
+Preparing to unpack .../libipsec-mb0_0.53-1_amd64.deb ...
+Unpacking libipsec-mb0 (0.53-1) ...
+Selecting previously unselected package libjudydebian1.
+Preparing to unpack .../libjudydebian1_1.0.5-5_amd64.deb ...
+Unpacking libjudydebian1 (1.0.5-5) ...
+Selecting previously unselected package libsctp1:amd64.
+Preparing to unpack .../libsctp1_1.0.18+dfsg-1_amd64.deb ...
+Unpacking libsctp1:amd64 (1.0.18+dfsg-1) ...
+Selecting previously unselected package stress-ng.
+Preparing to unpack .../stress-ng_0.11.07-1ubuntu2_amd64.deb ...
+Unpacking stress-ng (0.11.07-1ubuntu2) ...
+Setting up libjudydebian1 (1.0.5-5) ...
+Setting up libipsec-mb0 (0.53-1) ...
+Setting up libsctp1:amd64 (1.0.18+dfsg-1) ...
+Setting up stress-ng (0.11.07-1ubuntu2) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for libc-bin (2.31-0ubuntu9.17) ...
+jjk@super-vm:~$ stress-ng --version
+stress-ng, version 0.11.07 (gcc 9.4, x86_64 Linux 5.15.0-1089-azure) 💻🔥
+jjk@super-vm:~$ stress-ng --cpu 2 --timeout 5m --metrics-brief
+stress-ng: info:  [14245] dispatching hogs: 2 cpu
+stress-ng: info:  [14245] successful run completed in 300.14s (5 mins, 0.14 secs)
+stress-ng: info:  [14245] stressor       bogo ops real time  usr time  sys time   bogo ops/s   bogo ops/s
+stress-ng: info:  [14245]                           (secs)    (secs)    (secs)   (real time) (usr+sys time)
+stress-ng: info:  [14245] cpu               54214    300.12    299.05      0.12       180.64       181.21
+jjk@super-vm:~$
+```` 
+
+
+
+![Texte alternatif](stressCPU.png "stressCPU.png")
+
+
+
+
+![Texte alternatif](stresscpuMail.png "stresscpuMail.png")
+
+
+
+
+
+
+## MONITORING STRESS DE LA MACHINE-RAM
+
+
+```` 
+jjk@super-vm:~$ stress-ng --vm 1 --vm-bytes 600M --vm-keep --timeout 5m --metrics-brief
+stress-ng: info:  [14276] dispatching hogs: 1 vm
+stress-ng: info:  [14276] successful run completed in 300.04s (5 mins, 0.04 secs)
+stress-ng: info:  [14276] stressor       bogo ops real time  usr time  sys time   bogo ops/s   bogo ops/s
+stress-ng: info:  [14276]                           (secs)    (secs)    (secs)   (real time) (usr+sys time)
+stress-ng: info:  [14276] vm                    0    300.04     96.23     73.04         0.00         0.00
+jjk@super-vm:~$
+```` 
+
+
+## MONITORING COMMANDE AZ POUR LES ALERTES LEVEES
+
+
+```` 
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> az monitor activity-log list --resource-group test2 --output table --query "[?contains(operationName.value, 'Microsoft.Insights/metricAlerts')]"
+Caller                 CorrelationId                         Description    EventDataId                           EventTimestamp                Level          OperationId                           ResourceGroupName    ResourceId                                                                                                                             SubmissionTimestamp    SubscriptionId                        TenantId                              
+ResourceGroup
+---------------------  ------------------------------------  -------------  ------------------------------------  ----------------------------  -------------  ------------------------------------  -------------------  -------------------------------------------------------------------------------------------------------------------------------------  ---------------------  ------------------------------------  ------------------------------------  ---------------
+pierre.oloa@efrei.net  bd40b52b-18c6-3456-f050-1570e39669ce                 e0d07d8b-115a-442e-8300-fc53a63aa11e  2025-12-14T12:46:02.3968737Z  Informational  7fc71b25-a292-473d-88d4-43c3739261f5  test2                /subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Insights/metricAlerts/cpu-alert-super-vm  2025-12-14T12:48:05Z   a3bd582e-88e4-4000-970e-b3e76914e628  413600cf-bd4e-4c7c-8a61-69e73cddf731  test2
+pierre.oloa@efrei.net  bd40b52b-18c6-3456-f050-1570e39669ce                 c903bd22-0299-482b-84a7-c11cd85e7ab7  2025-12-14T12:45:59.178087Z   Informational  7fc71b25-a292-473d-88d4-43c3739261f5  test2                /subscriptions/a3bd582e-88e4-4000-970e-b3e76914e628/resourceGroups/test2/providers/Microsoft.Insights/metricAlerts/cpu-alert-super-vm  2025-12-14T12:47:18Z   a3bd582e-88e4-4000-970e-b3e76914e628  413600cf-bd4e-4c7c-8a61-69e73cddf731  test2
+PS C:\Users\stephane\Desktop\Efrei\M1\cloud\Tp_cloudAzure\terraform> 
+```` 

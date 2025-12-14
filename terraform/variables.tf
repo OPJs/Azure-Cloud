@@ -37,3 +37,7 @@ variable "storage_container_name" {
   type        = string
   description = "vm password"
 }
+variable "alert_email_address" {
+  type        = string
+  description = "alert email"
+}
